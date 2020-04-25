@@ -25,7 +25,15 @@ public class Report {
 	@Column(name="phase")
 	@NotEmpty(message = "Phase must not be empty")
 	private String phase;
-	
+
+	public Report(Long reportId, @NotEmpty(message = "Project name must not be empty") String projectName, String projectDesc, @NotEmpty(message = "BU must not be empty") String bu, @NotEmpty(message = "Phase must not be empty") String phase) {
+		this.reportId = reportId;
+		this.projectName = projectName;
+		this.projectDesc = projectDesc;
+		this.bu = bu;
+		this.phase = phase;
+	}
+
 	public Long getReportId() {
 		return reportId;
 	}
