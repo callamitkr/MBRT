@@ -1,1 +1,3 @@
+com\capgemini\mbrt\controller\ReportControlletTest.class
 com\capgemini\mbrt\MbrtReportingToolApplicationTests.class
+com\capgemini\mbrt\service\TestReportService.class
