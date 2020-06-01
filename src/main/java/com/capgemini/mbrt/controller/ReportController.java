@@ -1,19 +1,31 @@
 package com.capgemini.mbrt.controller;
 
-import com.capgemini.mbrt.exception.ReportFoundException;
-import com.capgemini.mbrt.exception.ReportNotFoundException;
-import com.capgemini.mbrt.model.Report;
-import com.capgemini.mbrt.service.ReportService;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.time.LocalDate;
-import java.util.*;
+import com.capgemini.mbrt.exception.ReportFoundException;
+import com.capgemini.mbrt.exception.ReportNotFoundException;
+import com.capgemini.mbrt.model.Report;
+import com.capgemini.mbrt.service.ReportService;
 
 @RestController
 @RequestMapping("/mbrt")
@@ -36,7 +48,7 @@ public class ReportController {
 	}
 
 	@PostMapping("/createReport")
-	 public  ResponseEntity<String> creatreReport(@Valid @RequestBody Report newReport) throws ReportFoundException {
+	 public  ResponseEntity<String> creatreReport(@Validated @RequestBody Report newReport) throws ReportFoundException {
 		logger.info("Inside createReport Controller");
 		Optional<Report> existReport = reportService.findReportOfCurrentMonthByCreatedBy(newReport.getCreatedBy());
 		if(existReport.isPresent())
@@ -47,7 +59,7 @@ public class ReportController {
 	}
 
 	@PutMapping("/updateReport/{id}")
-	public ResponseEntity <Report> updateReport(@PathVariable(value = "id") Long reportId, @Valid @RequestBody Report report) throws ReportNotFoundException {
+	public ResponseEntity <Report> updateReport(@PathVariable(value = "id") Long reportId, @Validated @RequestBody Report report) throws ReportNotFoundException {
 		logger.info("Inside updateReport Controller");
 		Report oldreport =
 			reportService.findReortById(reportId).orElseThrow(() -> new

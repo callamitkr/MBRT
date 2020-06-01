@@ -4,8 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import com.capgemini.mbrt.model.Report;
-import com.capgemini.mbrt.repository.ReportRepository;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,11 +15,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.capgemini.mbrt.model.Report;
+import com.capgemini.mbrt.repository.ReportRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TestReportService {

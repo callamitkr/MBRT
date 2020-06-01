@@ -1,6 +1,7 @@
 com\capgemini\mbrt\aspect\LoggingAspect.class
 com\capgemini\mbrt\model\Report.class
 com\capgemini\mbrt\controller\ReportController.class
+com\capgemini\mbrt\exception\ReportFoundException.class
 com\capgemini\mbrt\repository\ReportRepository.class
 com\capgemini\mbrt\service\ReportSeviceImpl.class
 com\capgemini\mbrt\MbrtReportingToolApplication.class

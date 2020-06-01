@@ -1,10 +1,14 @@
 package com.capgemini.mbrt.model;
 
 
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import java.sql.Timestamp;
 import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name ="REPORTS")
@@ -12,10 +16,10 @@ public class Report {
 	@Id
     @GeneratedValue
 	private Long reportId;
-	@Column(name="project_Name")
+	@Column(name="projectName")
 	@NotEmpty(message = "Project name must not be empty")
 	private String projectName;
-	@Column(name="project_Desc")
+	@Column(name="projectDesc")
 	private String projectDesc;
 	@Column(name="barclaysPm")
     private String barclaysPm;
@@ -26,23 +30,27 @@ public class Report {
 	@NotEmpty(message = "Phase must not be empty")
 	private String phase;
 	@Column(name="keyMilestone")
+	@NotEmpty(message = "Key Milestone must not be empty")
 	private String keyMilestone;
 	@Column(name="keyHighlights")
+	@NotEmpty(message = "Key Highlights must not be empty")
 	private String keyHighlights;
 	@Column(name="barclaysFeedback")
+	@NotEmpty(message = "Barclays Feedback must not be empty")
 	private String 	barclaysFeedback;
-	@Column(name="issueRoadBlock")
+	@Column(name="issueRoadblock")
+	@NotEmpty(message = "Issue Roadblock must not be empty")
 	private String issueRoadblock;
 	@Column(name="createdBy")
+	@NotEmpty(message = "Created By must not be empty")
 	private String createdBy;
 	@Column(name="createdDate")
-	//@Temporal(value = TemporalType.DATE)
 	private LocalDate createdDate;
 	public Report(){
 
 	}
 
-	public Report(Long reportId, @NotEmpty(message = "Project name must not be empty") String projectName, String projectDesc, String barclaysPm, @NotEmpty(message = "BU must not be empty") String bu, @NotEmpty(message = "Phase must not be empty") String phase, String keyMilestone, String keyHighlights, String barclaysFeedback, String issueRoadblock, String createdBy, LocalDate createdDate) {
+	public Report(Long reportId, String projectName, String projectDesc, String barclaysPm, String bu, String phase, String keyMilestone, String keyHighlights, String barclaysFeedback, String issueRoadblock, String createdBy, LocalDate createdDate) {
 		this.reportId = reportId;
 		this.projectName = projectName;
 		this.projectDesc = projectDesc;
@@ -100,7 +108,7 @@ public class Report {
 		return keyMilestone;
 	}
 
-	public void setKeyMileStoneGag(String keyMileStoneGag) {
+	public void setKeyMileStoneGag(String keyMilestone) {
 		this.keyMilestone = keyMilestone;
 	}
 
@@ -124,7 +132,7 @@ public class Report {
 		return issueRoadblock;
 	}
 
-	public void setIssueRoadBlock(String issueRoadBlock) {
+	public void setIssueRoadBlock(String issueRoadblock) {
 		this.issueRoadblock = issueRoadblock;
 	}
 
