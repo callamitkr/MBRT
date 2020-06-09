@@ -1,31 +1,31 @@
 package com.capgemini.mbrt.controller;
 
-import java.time.LocalDate;
-import java.util.HashMap;
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
+import com.capgemini.mbrt.bean.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.mbrt.exception.ReportFoundException;
 import com.capgemini.mbrt.exception.ReportNotFoundException;
 import com.capgemini.mbrt.model.Report;
 import com.capgemini.mbrt.service.ReportService;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 
 @RestController
 @RequestMapping("/mbrt")
@@ -33,56 +33,52 @@ public class ReportController {
 	private static final Logger logger = LoggerFactory.getLogger(ReportController.class);
 
 	@Autowired
-    ReportService reportService;
-	
-	@GetMapping("/getReportsByMonthYear/{month}/{year}")
-	public List<Report> getReportsByMonthYear(@PathVariable("month") int month, @PathVariable("year") int year) {
-		logger.info("Inside getReportsByMonthYear year Controller");
-		return reportService.getReportsByMonthYear(month,year);
-	}
+	ReportService reportService;
 
-	@GetMapping("/getReportsBetweenDates")
-	public List<Report> getReportsBetweenDates(@RequestParam("startDate") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate startDate, @RequestParam("endDate") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate endDate) {
-		logger.info("Inside getReportsBetweenDates method Started{} {} ",startDate,endDate);
-		return reportService.getReportsBetweenDates(startDate,endDate);
+	@GetMapping("/getReportsByMonthYear/{month}/{year}")
+	public ResponseEntity<List<Report>> getReportsByMonthYear(@PathVariable("month") int month, @PathVariable("year") int year) {
+		List<Report> listOfReport = new ArrayList<>();
+		logger.info("Inside getReportsByMonthYear year Controller");
+		listOfReport  = reportService.getReportsByMonthYear(month, year);
+		return new ResponseEntity<>(listOfReport ,HttpStatus.OK);
 	}
 
 	@PostMapping("/createReport")
-	 public  ResponseEntity<String> creatreReport(@Validated @RequestBody Report newReport) throws ReportFoundException {
+	public ResponseEntity<Response> creatreReport(@Validated @RequestBody Report newReport) throws ReportFoundException {
 		logger.info("Inside createReport Controller");
-		Optional<Report> existReport = reportService.findReportOfCurrentMonthByCreatedBy(newReport.getCreatedBy());
-		if(existReport.isPresent())
-		        throw  new ReportFoundException("You have already created report for Current month");
-		logger.info("Report found :{}",existReport);
-		reportService.createReport(newReport);
-         return ResponseEntity.ok("Report created Successfully");
+		Optional<Report> existingReport = reportService.findReportOfCurrentMonthByCreatedBy(newReport.getCreatedBy());
+		if (existingReport.isPresent()) {
+			throw new ReportFoundException("You have already created report for Current month");
+		}
+		logger.info("Report found : {}", existingReport);
+		Report saveReport = reportService.createReport(newReport);
+		logger.info("Report saved with reportId : {}",saveReport.getReportId());
+		return new ResponseEntity<>(new Response("Report Created", HttpStatus.CREATED),HttpStatus.CREATED);
 	}
 
-	@PutMapping("/updateReport/{id}")
-	public ResponseEntity <Report> updateReport(@PathVariable(value = "id") Long reportId, @Validated @RequestBody Report report) throws ReportNotFoundException {
+	@PutMapping("/updateReport")
+	public ResponseEntity<Response> updateReport(@Validated @RequestBody Report report)
+			throws ReportNotFoundException, ReportFoundException {
 		logger.info("Inside updateReport Controller");
-		Report oldreport =
-			reportService.findReortById(reportId).orElseThrow(() -> new
-					ReportNotFoundException("Report id is not valid : "+reportId));
-		report.setReportId(reportId);
+		Optional<Report> existingReport = reportService.findReportOfCurrentMonthByCreatedBy(report.getCreatedBy());
+		if (existingReport.isPresent()) {
+			report.setReportId(existingReport.get().getReportId());
+			report.setCreatedDate(existingReport.get().getCreatedDate());
+		} else {
+			throw new ReportNotFoundException("You have not created report for current month");
+		}
 		reportService.updateReport(report);
-		return ResponseEntity.ok(report);
+		return new ResponseEntity<>(new Response("Report Created",HttpStatus.NO_CONTENT),HttpStatus.NO_CONTENT);
+
 	}
 
-	@GetMapping("/getReport/{id}")
-	public ResponseEntity<Report> getReportById(@PathVariable(value = "id") Long reportId)throws ReportNotFoundException {
-		logger.info("Inside getReport Controller");
-		Report report = reportService.findReortById(reportId).orElseThrow(()-> new ReportNotFoundException("Report id is not valid : "+reportId ));
+
+	@GetMapping("/getReport/{userId}")
+	public ResponseEntity<Report> getReportByUserId(@PathVariable(value = "userId") String userId)
+			throws ReportNotFoundException, ReportFoundException {
+		logger.info("Inside getReportByUserId Controller");
+		Report report = reportService.findReportOfCurrentMonthByCreatedBy(userId)
+				.orElseThrow(() -> new ReportNotFoundException("You have not created report for current month"));
 		return ResponseEntity.ok().body(report);
-	}
-
-	@DeleteMapping("/deleteReport/{id}")
-	public Map < String, Boolean > deleteEmployee(@PathVariable(value = "id") Long reportId) throws ReportNotFoundException {
-		  logger.info("Inside deleteReport Controller");
-		Report report1 =  reportService.findReortById(reportId) .orElseThrow(() -> new
-	  	ReportNotFoundException("Report id is not valid : "+reportId));
-		  reportService.deleteReport(report1);
-		  Map< String, Boolean > response = new HashMap< >();
-		  response.put("deleted", Boolean.TRUE); return response;
 	}
 }

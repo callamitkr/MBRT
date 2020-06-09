@@ -46,11 +46,13 @@ public class Report {
 	private String createdBy;
 	@Column(name="createdDate")
 	private LocalDate createdDate;
+	@Column(name="updatedDate")
+	private LocalDate updatedDate;
 	public Report(){
 
 	}
 
-	public Report(Long reportId, String projectName, String projectDesc, String barclaysPm, String bu, String phase, String keyMilestone, String keyHighlights, String barclaysFeedback, String issueRoadblock, String createdBy, LocalDate createdDate) {
+	public Report(Long reportId, String projectName, String projectDesc, String barclaysPm, String bu, String phase, String keyMilestone, String keyHighlights, String barclaysFeedback, String issueRoadblock, String createdBy, LocalDate createdDate,LocalDate updatedDate) {
 		this.reportId = reportId;
 		this.projectName = projectName;
 		this.projectDesc = projectDesc;
@@ -63,6 +65,7 @@ public class Report {
 		this.issueRoadblock = issueRoadblock;
 		this.createdBy = createdBy;
 		this.createdDate = createdDate;
+		this.updatedDate = updatedDate;
 	}
 
 	public Long getReportId() {
@@ -152,21 +155,23 @@ public class Report {
 		this.createdDate = createdDate;
 	}
 
+	
+	public LocalDate getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(LocalDate updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
 	@Override
 	public String toString() {
-		return "Report{" +
-				"reportId=" + reportId +
-				", projectName='" + projectName + '\'' +
-				", projectDesc='" + projectDesc + '\'' +
-				", barclaysPlPm='" + barclaysPm + '\'' +
-				", bu='" + bu + '\'' +
-				", phase='" + phase + '\'' +
-				", keyMileStoneGag='" + keyMilestone + '\'' +
-				", keyHighlights='" + keyHighlights + '\'' +
-				", barclaysFeedback='" + barclaysFeedback + '\'' +
-				", issueRoadBlock='" + issueRoadblock + '\'' +
-				", createdBy='" + createdBy + '\'' +
-				", createdDate=" + createdDate +
-				'}';
+		return "Report [reportId=" + reportId + ", projectName=" + projectName + ", projectDesc=" + projectDesc
+				+ ", barclaysPm=" + barclaysPm + ", bu=" + bu + ", phase=" + phase + ", keyMilestone=" + keyMilestone
+				+ ", keyHighlights=" + keyHighlights + ", barclaysFeedback=" + barclaysFeedback + ", issueRoadblock="
+				+ issueRoadblock + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedDate="
+				+ updatedDate + "]";
 	}
+
+	
 }

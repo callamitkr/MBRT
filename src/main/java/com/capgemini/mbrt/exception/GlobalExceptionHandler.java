@@ -1,8 +1,8 @@
 package com.capgemini.mbrt.exception;
 
-
-
-
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,12 +12,6 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {

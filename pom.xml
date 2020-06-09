@@ -19,24 +19,7 @@
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Hoxton.SR3</spring-cloud.version>
 	</properties>
-	<profiles>
-		<profile>
-			<id>sonar</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<!-- Optional URL to server. Default value is http://localhost:9000 -->
-				<sonar.host.url>http://localhost:9000</sonar.host.url>
-				<sonar.projectKey>mbrt12</sonar.projectKey>
-				<sonar.projectName>mbrtsonarpom</sonar.projectName>
-				
-				<sonar.java.binaries>.</sonar.java.binaries>
-				<sonar.sources>.</sonar.sources> 
-				<sonar.language>.</sonar.language>
-			</properties>
-		</profile>
-	</profiles>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -60,12 +43,12 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-sleuth</artifactId>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -102,9 +85,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.sonarsource.scanner.maven</groupId>
-			<artifactId>sonar-maven-plugin</artifactId>
-			<version>3.2</version>
+			<groupId>com.capgemini</groupId>
+			<artifactId>MBRT</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
