@@ -6,6 +6,7 @@ D:\MbrtTool\mbrt-service\src\main\java\com\capgemini\mbrt\exception\ReportFoundE
 D:\MbrtTool\mbrt-service\src\main\java\com\capgemini\mbrt\service\ReportService.java
 D:\MbrtTool\mbrt-service\src\main\java\com\capgemini\mbrt\controller\ReportController.java
 D:\MbrtTool\mbrt-service\src\main\java\com\capgemini\mbrt\repository\ReportRepository.java
+D:\MbrtTool\mbrt-service\src\main\java\com\capgemini\mbrt\bean\Response.java
 D:\MbrtTool\mbrt-service\src\main\java\com\capgemini\mbrt\exception\GlobalExceptionHandler.java
 D:\MbrtTool\mbrt-service\src\main\java\com\capgemini\mbrt\aspect\LoggingAspect.java
 D:\MbrtTool\mbrt-service\src\main\java\com\capgemini\mbrt\exception\ErrorDetails.java

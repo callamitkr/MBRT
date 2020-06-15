@@ -9,14 +9,14 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication
 @EnableAspectJAutoProxy
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
 public class MbrtReportingToolApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MbrtReportingToolApplication.class, args);
 	}
-	@Bean
+	/*@Bean
 	public Sampler alwaysSampler() {
 		return Sampler.ALWAYS_SAMPLE;
-	}
+	}*/
 }

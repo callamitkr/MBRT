@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
 		List<String> description = new ArrayList<>();
 		description.add(execption.getMessage());
 		logger.error("Error has occurred {} ",description);
-        ErrorDetails errorDetails = new ErrorDetails(new Date().getTime(), "Record Not Found", description);
+        ErrorDetails errorDetails = new ErrorDetails(new Date().getTime(), "Report Not Found", description);
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
    }
 

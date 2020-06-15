@@ -26,6 +26,8 @@ import com.capgemini.mbrt.model.Report;
 import com.capgemini.mbrt.service.ReportService;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("/mbrt")
@@ -38,28 +40,28 @@ public class ReportController {
 	@GetMapping("/getReportsByMonthYear/{month}/{year}")
 	public ResponseEntity<List<Report>> getReportsByMonthYear(@PathVariable("month") int month, @PathVariable("year") int year) {
 		List<Report> listOfReport = new ArrayList<>();
-		logger.info("Inside getReportsByMonthYear year Controller");
+		//logger.info("Inside getReportsByMonthYear year Controller");
 		listOfReport  = reportService.getReportsByMonthYear(month, year);
 		return new ResponseEntity<>(listOfReport ,HttpStatus.OK);
 	}
 
 	@PostMapping("/createReport")
-	public ResponseEntity<Response> creatreReport(@Validated @RequestBody Report newReport) throws ReportFoundException {
-		logger.info("Inside createReport Controller");
+	public ResponseEntity<Response> creatreReport(@Valid @RequestBody Report newReport) throws ReportFoundException {
+	//	logger.info("Inside createReport Controller");
 		Optional<Report> existingReport = reportService.findReportOfCurrentMonthByCreatedBy(newReport.getCreatedBy());
 		if (existingReport.isPresent()) {
 			throw new ReportFoundException("You have already created report for Current month");
 		}
-		logger.info("Report found : {}", existingReport);
-		Report saveReport = reportService.createReport(newReport);
-		logger.info("Report saved with reportId : {}",saveReport.getReportId());
+		//logger.info("Report found : {}", existingReport);
+		Report savedReport = reportService.createReport(newReport);
+		//logger.info("Report saved with reportId : {}",savedReport.getReportId());
 		return new ResponseEntity<>(new Response("Report Created", HttpStatus.CREATED),HttpStatus.CREATED);
 	}
 
 	@PutMapping("/updateReport")
 	public ResponseEntity<Response> updateReport(@Validated @RequestBody Report report)
 			throws ReportNotFoundException, ReportFoundException {
-		logger.info("Inside updateReport Controller");
+	//	logger.info("Inside updateReport Controller");
 		Optional<Report> existingReport = reportService.findReportOfCurrentMonthByCreatedBy(report.getCreatedBy());
 		if (existingReport.isPresent()) {
 			report.setReportId(existingReport.get().getReportId());
@@ -72,11 +74,10 @@ public class ReportController {
 
 	}
 
-
 	@GetMapping("/getReport/{userId}")
 	public ResponseEntity<Report> getReportByUserId(@PathVariable(value = "userId") String userId)
 			throws ReportNotFoundException, ReportFoundException {
-		logger.info("Inside getReportByUserId Controller");
+		//logger.info("Inside getReportByUserId Controller");
 		Report report = reportService.findReportOfCurrentMonthByCreatedBy(userId)
 				.orElseThrow(() -> new ReportNotFoundException("You have not created report for current month"));
 		return ResponseEntity.ok().body(report);

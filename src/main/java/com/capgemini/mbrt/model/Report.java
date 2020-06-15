@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name ="REPORTS")
@@ -24,7 +25,7 @@ public class Report {
 	@Column(name="barclaysPm")
     private String barclaysPm;
 	@Column(name="bu")
-	@NotEmpty(message = "BU must not be empty")
+	@NotNull(message = "BU must not be empty")
 	private String bu;
 	@Column(name="phase")
 	@NotEmpty(message = "Phase must not be empty")

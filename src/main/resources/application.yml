@@ -1,5 +1,5 @@
 server:
- port: 0
+ port: 9000
 spring:
  application:
   name : mbrt-service
@@ -26,15 +26,15 @@ spring:
 logging:
  level:
   org: 
-#   springframework: DEBUG
-  com.capgemini.mbrt: DEBUG
+   springframework: DEBUG
+   com.capgemini.mbrt: DEBUG
 #spring.aop.auto = false
-eureka:
- client:
-  service-url:
-   defaultZone: http://localhost:8000/eureka
-   register-with-eureka: true
-   fetch-registry: true
- instance:
-  instance-id : ${spring.application.name}:${random.int}
+#eureka:
+ #client:
+  #service-url:
+   #defaultZone: http://localhost:8000/eureka
+   #register-with-eureka: true
+   #fetch-registry: true
+ #instance:
+  #instance-id : ${spring.application.name}:${random.int}
       
