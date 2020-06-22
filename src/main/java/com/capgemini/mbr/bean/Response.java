@@ -1,4 +1,4 @@
-package com.capgemini.mbrt.bean;
+package com.capgemini.mbr.bean;
 
 import org.springframework.http.HttpStatus;
 

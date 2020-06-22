@@ -1,4 +1,4 @@
-package com.capgemini.mbrt.exception;
+package com.capgemini.mbr.exception;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,6 +17,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
+	@ExceptionHandler(ReportDataNotFoundException.class)
+	public ResponseEntity<ErrorDetails> handleResourceNotFoundException(ReportDataNotFoundException execption) {
+		List<String> description = new ArrayList<>();
+		description.add(execption.getMessage());
+		logger.error("Error has occurred {} ",description);
+		ErrorDetails errorDetails = new ErrorDetails(new Date().getTime(), "Report data not Found", description);
+		return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+	}
 	@ExceptionHandler(ReportNotFoundException.class)
 	public ResponseEntity<ErrorDetails> handleResourceNotFoundException(ReportNotFoundException execption) {
 		List<String> description = new ArrayList<>();
@@ -35,7 +43,7 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(errorDetails, HttpStatus.FOUND);
 	}
    @ExceptionHandler(MethodArgumentNotValidException.class)
-	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException execption) {
+	public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException execption) {
 		List<String> description = new ArrayList<>();
 		for(ObjectError error : execption.getBindingResult().getAllErrors()) {
 			description.add(error.getDefaultMessage());

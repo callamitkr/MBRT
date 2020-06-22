@@ -1,14 +1,19 @@
-package com.capgemini.mbrt.controller;
+package com.capgemini.mbr.controller;
 
-import java.net.URI;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.capgemini.mbrt.bean.Response;
+import com.capgemini.mbr.bean.Response;
+import com.capgemini.mbr.exception.ReportDataNotFoundException;
+import com.capgemini.mbr.util.PptGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -20,22 +25,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.capgemini.mbrt.exception.ReportFoundException;
-import com.capgemini.mbrt.exception.ReportNotFoundException;
-import com.capgemini.mbrt.model.Report;
-import com.capgemini.mbrt.service.ReportService;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import com.capgemini.mbr.exception.ReportFoundException;
+import com.capgemini.mbr.exception.ReportNotFoundException;
+import com.capgemini.mbr.model.Report;
+import com.capgemini.mbr.service.ReportService;
 
 import javax.validation.Valid;
 
 
 @RestController
-@RequestMapping("/mbrt")
+@RequestMapping("/mbr")
 public class ReportController {
 	private static final Logger logger = LoggerFactory.getLogger(ReportController.class);
 
 	@Autowired
 	ReportService reportService;
+	@Autowired
+	PptGenerator pptGenerator;
 
 	@GetMapping("/getReportsByMonthYear/{month}/{year}")
 	public ResponseEntity<List<Report>> getReportsByMonthYear(@PathVariable("month") int month, @PathVariable("year") int year) {
@@ -81,5 +87,20 @@ public class ReportController {
 		Report report = reportService.findReportOfCurrentMonthByCreatedBy(userId)
 				.orElseThrow(() -> new ReportNotFoundException("You have not created report for current month"));
 		return ResponseEntity.ok().body(report);
+	}
+	@GetMapping(value = "/download")
+	public ResponseEntity<InputStreamResource> downloadReport() throws ReportDataNotFoundException,IOException  {
+	List<Report> listOfReport    = reportService.getReportsByCurrentMonthYear();
+	 if(listOfReport.size() == 0){
+	 	throw new ReportDataNotFoundException("Not reocrd available for current month ");
+	 }
+		ByteArrayInputStream in = pptGenerator.ReportToPpt(listOfReport);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=Report.pptx");
+		in.close();
+		return ResponseEntity
+				.ok()
+				.headers(headers)
+				.body(new InputStreamResource(in));
 	}
 }

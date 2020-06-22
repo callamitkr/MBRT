@@ -1,4 +1,4 @@
-package com.capgemini.mbrt.exception;
+package com.capgemini.mbr.exception;
 
 public class ReportFoundException extends Exception {
 

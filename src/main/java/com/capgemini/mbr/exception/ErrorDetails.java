@@ -1,4 +1,4 @@
-package com.capgemini.mbrt.exception;
+package com.capgemini.mbr.exception;
 
 import java.util.List;
 
@@ -14,12 +14,12 @@ public class ErrorDetails {
          this.description = description;
     }
 
-    /*public Long getTimestamp() {
+    public Long getTimestamp() {
          return timestamp;
     }
 	public String getError() {
 		return error;
 	}
 	public List<String> getDescription() {return description; }
-*/
+
 }

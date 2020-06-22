@@ -12,8 +12,8 @@
 	<groupId>com.capgemini</groupId>
 	<artifactId>mbrt-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>mbrt service</name>
-	<description>mbrt service </description>
+	<name>mbr service</name>
+	<description>mbr service </description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -85,9 +85,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.capgemini</groupId>
-			<artifactId>MBRT</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.17</version>
 		</dependency>
 	</dependencies>
 

@@ -1,54 +1,54 @@
-package com.capgemini.mbrt.model;
+package com.capgemini.mbr.model;
 
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Entity
 @Table(name ="REPORTS")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Report {
 	@Id
     @GeneratedValue
 	private Long reportId;
 	@Column(name="projectName")
-	@NotEmpty(message = "Project name must not be empty")
+	@NotEmpty(message = "{notempty.projectName}")
 	private String projectName;
 	@Column(name="projectDesc")
+	@NotEmpty(message = "{notempty.projectDesc}")
 	private String projectDesc;
 	@Column(name="barclaysPm")
+	@NotEmpty(message = "{notempty.barclaysPm}")
     private String barclaysPm;
 	@Column(name="bu")
-	@NotNull(message = "BU must not be empty")
+	@NotEmpty(message = "{notempty.bu}")
 	private String bu;
 	@Column(name="phase")
-	@NotEmpty(message = "Phase must not be empty")
+	@NotEmpty(message = "{notempty.paase}")
 	private String phase;
 	@Column(name="keyMilestone")
-	@NotEmpty(message = "Key Milestone must not be empty")
+	@NotEmpty(message = "{nonempty.keyMilestone}")
 	private String keyMilestone;
 	@Column(name="keyHighlights")
-	@NotEmpty(message = "Key Highlights must not be empty")
+	@NotEmpty(message = "{nonempty.keyHighlights}")
 	private String keyHighlights;
 	@Column(name="barclaysFeedback")
-	@NotEmpty(message = "Barclays Feedback must not be empty")
+	@NotEmpty(message = "{nonempty.barclaysFeedback}")
 	private String 	barclaysFeedback;
 	@Column(name="issueRoadblock")
-	@NotEmpty(message = "Issue Roadblock must not be empty")
+	@NotEmpty(message = "{nonempty.issueRoadblock}")
 	private String issueRoadblock;
 	@Column(name="createdBy")
-	@NotEmpty(message = "Created By must not be empty")
+	@NotEmpty(message = "{nonempty.createdBy}")
 	private String createdBy;
 	@Column(name="createdDate")
 	private LocalDate createdDate;
 	@Column(name="updatedDate")
 	private LocalDate updatedDate;
+
 	public Report(){
 
 	}
@@ -174,5 +174,4 @@ public class Report {
 				+ updatedDate + "]";
 	}
 
-	
 }

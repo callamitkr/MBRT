@@ -1,19 +1,15 @@
-package com.capgemini.mbrt.controller;
+package com.capgemini.mbr.controller;
 
-import com.capgemini.mbrt.exception.GlobalExceptionHandler;
-import com.capgemini.mbrt.exception.ReportFoundException;
-import com.capgemini.mbrt.exception.ReportNotFoundException;
-import com.capgemini.mbrt.model.Report;
+import com.capgemini.mbr.exception.GlobalExceptionHandler;
+import com.capgemini.mbr.exception.ReportFoundException;
+import com.capgemini.mbr.exception.ReportNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.core.MethodParameter;
 import org.springframework.validation.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
-import java.lang.reflect.Method;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,7 +41,7 @@ public class GlobalExceptionTest {
         MethodArgumentNotValidException ex = new MethodArgumentNotValidException(null, bindingResult);
         //testBindingResult(bindingResult, ex);
 
-        assertThat(globalExceptionHandler.handleMethodArgumentNotValid(ex).getStatusCodeValue()).isEqualTo(400);
+      assertThat(globalExceptionHandler.handleMethodArgumentNotValid(ex).getStatusCodeValue()).isEqualTo(400);
     }
 
     @Test

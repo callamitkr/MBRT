@@ -1,4 +1,4 @@
-package com.capgemini.mbrt.controller;
+package com.capgemini.mbr.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -10,9 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.capgemini.mbrt.aspect.LoggingAspect;
-import com.capgemini.mbrt.exception.GlobalExceptionHandler;
-import com.capgemini.mbrt.exception.ReportNotFoundException;
+import com.capgemini.mbr.aspect.LoggingAspect;
+import com.capgemini.mbr.exception.ReportNotFoundException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,26 +19,19 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.capgemini.mbrt.bean.Response;
-import com.capgemini.mbrt.exception.ReportFoundException;
-import com.capgemini.mbrt.model.Report;
-import com.capgemini.mbrt.service.ReportService;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import com.capgemini.mbr.bean.Response;
+import com.capgemini.mbr.exception.ReportFoundException;
+import com.capgemini.mbr.model.Report;
+import com.capgemini.mbr.service.ReportService;
 
-import javax.validation.constraints.NotNull;
 @EnableAspectJAutoProxy
 @RunWith(MockitoJUnitRunner.class)
 public class ReportControlletTest {

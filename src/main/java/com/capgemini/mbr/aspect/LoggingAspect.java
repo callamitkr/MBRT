@@ -1,5 +1,7 @@
-package com.capgemini.mbrt.aspect;
+package com.capgemini.mbr.aspect;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -18,6 +20,10 @@ public class LoggingAspect {
     {
         MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
         ObjectMapper mapper = new ObjectMapper();
+        /*mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);*/
+        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
+        mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         //Get intercepted method details
         String className = methodSignature.getDeclaringType().getSimpleName();
         String methodName = methodSignature.getName();

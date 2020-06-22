@@ -1,4 +1,4 @@
-package com.capgemini.mbrt.service;
+package com.capgemini.mbr.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
@@ -17,8 +17,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.capgemini.mbrt.model.Report;
-import com.capgemini.mbrt.repository.ReportRepository;
+import com.capgemini.mbr.model.Report;
+import com.capgemini.mbr.repository.ReportRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
